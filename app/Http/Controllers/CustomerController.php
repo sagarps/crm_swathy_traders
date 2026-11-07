@@ -4,13 +4,15 @@ use Illuminate\Http\Request;
 use App\Customer;
 use App\Places;
 use App\CustomerType;
+use App\CustomerClassification;
+use Auth;
 
 class CustomerController extends Controller
 {
     // Display a listing of the customers
     public function index()
     {
-        $customers = Customer::all();
+        $customers = Customer::with(['place', 'customerType', 'classification'])->get();
         return view('customers.index', compact('customers'));
     }
 
@@ -19,7 +21,8 @@ class CustomerController extends Controller
     {   
         $places = Places::all();
         $customer_types = CustomerType::all();
-        return view('customers.create',compact('places','customer_types'));
+        $classifications = CustomerClassification::orderBy('name', 'asc')->get();
+        return view('customers.create', compact('places', 'customer_types', 'classifications'));
     }
 
     // Store a newly created customer in storage
@@ -32,6 +35,7 @@ class CustomerController extends Controller
             'address' => 'required',
             'alternate_phone' => 'nullable',
             'place_id' => 'required|integer',
+            'customer_classification_id' => 'required|exists:customer_classifications,id',
         ]);
 
         $customerData = $request->all();
@@ -53,13 +57,14 @@ class CustomerController extends Controller
     public function edit($customer_id)
     {
         $places = Places::all();
-        $customer=Customer::find($customer_id);
+        $customer = Customer::findOrFail($customer_id);
         $customer_types = CustomerType::all();
-        return view('customers.edit', compact('customer','places','customer_types'));
+        $classifications = CustomerClassification::orderBy('name', 'asc')->get();
+        return view('customers.edit', compact('customer', 'places', 'customer_types', 'classifications'));
     }
 
     // Update the specified customer in storage
-    public function update(Request $request,$customer_id )
+    public function update(Request $request, $customer_id)
     {
         $request->validate([
             'customer_name' => 'required',
@@ -68,6 +73,7 @@ class CustomerController extends Controller
             'address' => 'required',
             'alternate_phone' => 'nullable',
             'place_id' => 'required|integer',
+            'customer_classification_id' => 'required|exists:customer_classifications,id',
         ]);
 
         $customer = Customer::findOrFail($customer_id);
@@ -89,10 +95,10 @@ class CustomerController extends Controller
     public function addCustomerType(Request $request)
     {
         $ncustomertype = $request->get('ctype');
-        $count = CustomerType::where('customer_type_name',$ncustomertype)->count();
+        $count = CustomerType::where('customer_type_name', $ncustomertype)->count();
         $data = null;
         if($count > 0) {
-            $data  = 0 ;
+            $data = 0;
             return $data;
         }
         else {
@@ -104,6 +110,25 @@ class CustomerController extends Controller
             $ctype->save();
             return $ctype->id;
         }
-        
+    }
+
+    public function addCustomerClassification(Request $request)
+    {
+        $name = strtoupper(trim($request->get('cname')));
+        if (empty($name)) {
+            return response()->json(['status' => 'error', 'message' => 'Classification name is required.'], 422);
+        }
+
+        $count = CustomerClassification::where('name', $name)->count();
+        if ($count > 0) {
+            return 0;
+        }
+
+        $classification = CustomerClassification::create([
+            'name' => $name,
+            'created_by' => Auth::id(),
+        ]);
+
+        return $classification->id;
     }
 }

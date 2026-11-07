@@ -90,6 +90,7 @@
           <li><a href="{{route('price.list.index')}}"><i class="fa fa-circle-o"></i>Price List</a></li>
         @endif
         @if(Auth::user()->userpermission(24))
+          <li><a href="{{route('customer_classifications.index')}}"><i class="fa fa-circle-o"></i>Customer Classification</a></li>  
           <li><a href="{{route('customers.index')}}"><i class="fa fa-circle-o"></i>Customer Master</a></li>
         @endif
       </ul>

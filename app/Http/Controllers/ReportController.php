@@ -69,6 +69,7 @@ class ReportController extends Controller
         }
 
         $enquiry = $enquiry->select('enquiry.*','enquiry_logs.status_remaks','enquiry_logs.status_date')
+                           ->with(['customer.classification', 'customer.customerType', 'customer.place', 'lead', 'enqStatus', 'employee'])
 	    				   ->get();
         $product_raw='N';
         if($request->get('show_products') == 'Y') {
@@ -193,7 +194,15 @@ class ReportController extends Controller
                          ->first()->id ?? null;
             $activity = $activity->where('user_id','=',$user_id); 
         }
-        $activity = $activity->orderBy('created_at')->get();
+        $activity = $activity->with([
+            'status',
+            'user.employee',
+            'enquiry.customer.classification',
+            'enquiry.customer.customerType',
+            'enquiry.customer.place',
+            'enquiry.lead',
+            'enquiry.enqStatus'
+        ])->orderBy('created_at')->get();
         
         return view('reports/activity_report_show',compact('from','to','activity','employee'));
     }

@@ -105,6 +105,7 @@
               <th>Sl No.</th>
               <th>Enquiry No</th>
               <th>Customer</th>
+              <th>Classification</th>
               <th>Customer Type</th>
               <th>Alternate Phone</th>
               <th>Place</th>
@@ -136,6 +137,7 @@
                 <td>{{$c++}}</td>
                 <td>{{$enq->enq_no}}</td>
                 <td>{{$enq->customer->customer_name ?? ''}}</td>
+                <td>{{$enq->customer->classification->name ?? ''}}</td>
                 <td>{{$enq->customer->customerType->customer_type_name ?? ''}}</td>
                 <td>{{$enq->customer->alternate_phone ?? ''}}</td>
                 <td>{{$enq->customer->place->place ?? ''}}</td>

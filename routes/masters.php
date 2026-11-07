@@ -280,3 +280,17 @@ Route::group(['middleware' => ['check.authPermission:24']], function(){
 
 Route::get('add/customertype',['as'=>'add.customertype',
   'uses'=>'CustomerController@addCustomerType']);
+
+Route::get('add/customerclassification',['as'=>'add.customerclassification',
+  'uses'=>'CustomerController@addCustomerClassification']);
+
+
+// Customer Classifications
+Route::group(['middleware' => ['check.authPermission:24']], function(){
+  Route::get('customer-classifications', ['as' => 'customer_classifications.index', 'uses' => 'CustomerClassificationController@index']);
+  Route::get('customer-classifications/create', ['as' => 'customer_classifications.create', 'uses' => 'CustomerClassificationController@create']);
+  Route::post('customer-classifications/store', ['as' => 'customer_classifications.store', 'uses' => 'CustomerClassificationController@store']);
+  Route::get('customer-classifications/edit/{id}', ['as' => 'customer_classifications.edit', 'uses' => 'CustomerClassificationController@edit']);
+  Route::post('customer-classifications/update/{id}', ['as' => 'customer_classifications.update', 'uses' => 'CustomerClassificationController@update']);
+  Route::get('customer-classifications/destroy/{id}', ['as' => 'customer_classifications.destroy', 'uses' => 'CustomerClassificationController@destroy']);
+});

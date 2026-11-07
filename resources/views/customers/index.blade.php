@@ -181,7 +181,8 @@ and (orientation : landscape)
                     <th>Contact No</th>
                     <th>Address</th>
                     <th>Place</th>
-                    <th>Type</th>    
+                    <th>Type</th>
+                    <th>Classification</th>    
                     <th>Edit</th>
                 </tr>
                 </thead>
@@ -196,6 +197,13 @@ and (orientation : landscape)
                       <td>{{$customer->address}}</td>
                       <td>{{$customer->place->place ?? ''}}</td>
                       <td>{{$customer->customerType->customer_type_name ?? ''}}</td>
+                      <td>
+                        @if($customer->classification)
+                          <span class="label label-info">{{$customer->classification->name}}</span>
+                        @else
+                          <span class="text-muted">-</span>
+                        @endif
+                      </td>
                       <td><a href="{{route('customers.edit',[$customer->id])}}"><i class="fa fa-fw fa-pencil" style="color: blue;"></i></a></td>
                   </tr>
                   @endforeach

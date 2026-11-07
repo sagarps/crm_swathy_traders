@@ -13,7 +13,7 @@ class Customer extends Model
     
     protected $fillable = [
         'customer_name','customer_phone','office_id','address','alternate_phone','place_id',
-        'created_by','customer_type_id','followup_type','is_critical'
+        'created_by','customer_type_id','customer_classification_id','followup_type','is_critical'
     ];
 
     public $timestamps = true;
@@ -31,6 +31,11 @@ class Customer extends Model
     public function customerType()
     {
     	return $this->belongsTo('App\CustomerType','customer_type_id');
+    }
+
+    public function classification()
+    {
+        return $this->belongsTo('App\CustomerClassification', 'customer_classification_id');
     }
 
     public function collectionFollowups()

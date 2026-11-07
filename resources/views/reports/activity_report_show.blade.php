@@ -96,6 +96,7 @@
               <th>Action</th>
               <th>Enquiry No</th>
               <th>Customer</th>
+              <th>Classification</th>
               <th>Customer Type</th>
               <th>Place</th>
               <th>Phone</th>
@@ -119,6 +120,7 @@
                 <td>{{$enq->status->status_name ?? ''}}</td>
                 <td>{{$enq->enquiry->enq_no ?? ''}}</td>
                 <td>{{$enq->enquiry->customer->customer_name ?? ''}}</td>
+                <td>{{$enq->enquiry->customer->classification->name ?? ''}}</td>
                 <td>{{$enq->enquiry->customer->customerType->customer_type_name ?? ''}}</td>
                 <td>{{$enq->enquiry->customer->place->place ?? ''}}</td>
                 <td>{{$enq->enquiry->customer->customer_phone ?? ''}}</td>
