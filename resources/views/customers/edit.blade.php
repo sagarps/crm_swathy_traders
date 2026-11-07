@@ -365,23 +365,6 @@
                           </div>
                           <div class="col-md-12">
                             <div class="col-md-5">
-                              <div class="form-group">
-                                <label class="control-label">Followup Type<i style="color: red">*</i></label>
-                                <div>
-                                  <select class="form-control" name="followup_type" id="followup_type" required>
-                                  <option value="COMMITED_DATE" @if($customer->followup_type == "COMMITED_DATE") selected @endif>COMMITED DATE</option>
-                                  <option value="MONDAY" @if($customer->followup_type == "MONDAY") selected @endif>MONDAY</option>
-                                  <option value="TUESDAY" @if($customer->followup_type == "TUESDAY") selected @endif>TUESDAY</option>
-                                  <option value="WEDNESDAY" @if($customer->followup_type == "WEDNESDAY") selected @endif>WEDNESDAY</option>
-                                  <option value="THURSDAY" @if($customer->followup_type == "THURSDAY") selected @endif>THURSDAY</option>
-                                  <option value="FRIDAY" @if($customer->followup_type == "FRIDAY") selected @endif>FRIDAY</option>
-                                  <option value="SATURDAY" @if($customer->followup_type == "SATURDAY") selected @endif>SATURDAY</option>
-                                  <option value="SUNDAY" @if($customer->followup_type == "SUNDAY") selected @endif>SUNDAY</option>
-                                </select>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="col-md-5">
                               <div class="form-group @error('customer_classification_id') has-error @enderror">
                                 <label class="control-label">Customer Classification<i style="color: red">*</i></label>
                                 <div>
@@ -403,6 +386,23 @@
                               <div>
                                 <br>
                                 <i class="fa fa-plus-circle" aria-hidden="true" style="color:#3c8dbc;font-size:30px;position:relative;margin-top: 9px;cursor:pointer;" data-toggle="modal" data-target="#modal-customer_classification" title="Add Customer Classification"></i>
+                              </div>
+                            </div>
+                            <div class="col-md-5">
+                              <div class="form-group">
+                                <label class="control-label">Followup Type<i style="color: red">*</i></label>
+                                <div>
+                                  <select class="form-control" name="followup_type" id="followup_type" required>
+                                  <option value="COMMITED_DATE" @if($customer->followup_type == "COMMITED_DATE") selected @endif>COMMITED DATE</option>
+                                  <option value="MONDAY" @if($customer->followup_type == "MONDAY") selected @endif>MONDAY</option>
+                                  <option value="TUESDAY" @if($customer->followup_type == "TUESDAY") selected @endif>TUESDAY</option>
+                                  <option value="WEDNESDAY" @if($customer->followup_type == "WEDNESDAY") selected @endif>WEDNESDAY</option>
+                                  <option value="THURSDAY" @if($customer->followup_type == "THURSDAY") selected @endif>THURSDAY</option>
+                                  <option value="FRIDAY" @if($customer->followup_type == "FRIDAY") selected @endif>FRIDAY</option>
+                                  <option value="SATURDAY" @if($customer->followup_type == "SATURDAY") selected @endif>SATURDAY</option>
+                                  <option value="SUNDAY" @if($customer->followup_type == "SUNDAY") selected @endif>SUNDAY</option>
+                                </select>
+                                </div>
                               </div>
                             </div>
                           </div>
