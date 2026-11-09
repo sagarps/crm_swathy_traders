@@ -44,7 +44,7 @@
         @if(Auth::user()->userpermission(22))
         <li><a href="{{route('associate.index')}}"><i class="fa fa-circle-o"></i>Business Associates</a></li>
         @endif
-        @if(Auth::user()->userpermission(1) || (Auth::user()->userRole && Auth::user()->userRole->role && Auth::user()->userRole->role->name == 'ADMIN'))
+        @if(Auth::user()->userpermission(1))
         <li><a href="{{route('security.dashboard')}}"><i class="fa fa-shield"></i>Security & Monitoring</a></li>
         @endif
       </ul>

@@ -337,14 +337,15 @@ class EnquiryController extends Controller
                                     ->where('customer_phone','=',$info[1])
                                     ->where('office_id','=',Auth::user()->office_id)
                                     ->first();
-                $check2 = Customer::where('customer_phone','=',$request->get('phone'))
+                
+                if($customer != null){
+                    $check2 = Customer::where('customer_phone','=',$request->get('phone'))
                                   ->where('id','!=',$customer->id)
                                   ->where('office_id','=',Auth::user()->office_id)
                                   ->count();
-                if($check2 > 0){
-                    return redirect()->route('enquiry.index')->with('number','true');
-                }
-                if($customer != null){    
+                    if($check2 > 0){
+                        return redirect()->route('enquiry.index')->with('number','true');
+                    }    
                     $customer->customer_name  = strtoupper($request->get('name'));              
                     $customer->customer_phone = $request->get('phone');              
                     $customer->office_id      = Auth::user()->office_id;

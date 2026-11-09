@@ -51,6 +51,7 @@ class HomeController extends Controller
                                          ->first()->id;
         $follow_up_stat   = EnquiryStatus::where('status_name','=','FOLLOW UP')
                                          ->first()->id;
+        $user = User::find(Auth::user()->id);                                 
 //////////admin/////////
     if(Auth::user()->userpermission(2) || Auth::user()->userpermission(3) || Auth::user()->userpermission(4) || Auth::user()->userpermission(5) || Auth::user()->userpermission(7) || Auth::user()->userpermission(8) || Auth::user()->userpermission(9) || Auth::user()->userpermission(10) || Auth::user()->userpermission(14)){
         $emp_count        = EmployeeDetail::where('office_id','=',Auth::user()->office_id)
