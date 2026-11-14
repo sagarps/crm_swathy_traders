@@ -152,6 +152,39 @@
 
                   <!-- add function type modal ends -->
 
+                    <!-- Add customer classification modal -->
+                    <div class="modal modal-default fade" id="modal-customer_classification">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">Add Customer Classification</h4>
+                          </div>
+
+                          <form class="form-horizontal form" action="" method="">
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+                            <div class="col-md-12">
+                                <div class="col-md-6">
+                                  <div class="form-group">
+                                    <label class="control-label">Classification Name<i style="color: red">*</i></label>
+                                    <div>
+                                    <input type="text" name="ncustomerclassification" id="ncustomerclassification" class="form-control" autocomplete="off" required>
+                                    </div>
+                                  </div>
+                                </div>
+                            </div>
+                          <div class="modal-footer">
+                          <button type="submit" class="btn btn-info" id="add_customer_classification">Add</button>
+                            <button type="button" class="btn btn-info pull-right" data-dismiss="modal">Close</button>
+                          </div>
+                        </form>
+                        </div>
+                      </div>
+                    </div>
+                  <!-- add customer classification modal ends -->
+
                     <!-- Add place modal -->
                     <div class="modal modal-default fade" id="modal-place">
                       <div class="modal-dialog">
@@ -396,6 +429,25 @@
                           <div class="col-md-12">
                             <div class="col-md-5">
                               <div class="form-group">
+                                <label class="control-label">Customer Classification<i style="color: red">*</i></label>
+                                <div>
+                                  <select class="form-control" name="customer_classification_id" id="customer_classification_id" required>
+                                    <option value="">--Select--</option>
+                                    @foreach($classifications as $classification)
+                                      <option value="{{$classification->id}}">{{$classification->name}}</option>
+                                    @endforeach
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-1">
+                              <div>
+                              <br>
+                              <i class="fa fa-plus-circle" aria-hidden="true" style="color:#3c8dbc;font-size:30px;position:relative;margin-top: 9px;cursor:pointer;" data-toggle="modal" data-target="#modal-customer_classification" title="Add Customer Classification"></i>
+                              </div>
+                            </div>
+                            <div class="col-md-5">
+                              <div class="form-group">
                                 <label class="control-label">Customer Type<i style="color: red">*</i></label>
                                 <div>
                                   <select class="form-control" name="customer_type_id" id="customer_type" required>
@@ -417,6 +469,9 @@
                               <i class="fa fa-plus-circle" aria-hidden="true" style="color:#3c8dbc;font-size:30px;position:relative;margin-top: 9px;" data-toggle="modal" data-target="#modal-customer_type"></i>
                               </div>
                             </div>
+                          </div>
+
+                          <div class="col-md-12">
                             <div class="col-md-5">
                               <div class="form-group">
                                 <label class="control-label">Function Type<i style="color: red">*</i></label>
@@ -838,6 +893,7 @@ $(document).on('click','#add',function(e){
                 $("#place").val(data.place_id);
                 $("#alt_phone").val(data.alternate_phone);
                 $("#customer_type").val(data.customer_type_id);
+                $("#customer_classification_id").val(data.customer_classification_id);
                 $("#address").val(data.address);
             }
             else{
@@ -846,6 +902,7 @@ $(document).on('click','#add',function(e){
                 $("#alt_phone").val(data.alternate_phone);
                 $("#place").val(data.place);
                 $("#customer_type").val('');
+                $("#customer_classification_id").val('');
                 $("#address").val('');
             }
         });
@@ -942,6 +999,28 @@ $(document).on('click','#add',function(e){
           alert("Customer Type added");
           $('#modal-customer_type').modal('hide');
           $('#customer_type').append('<option value="'+data+'" selected>'+ctype.toUpperCase()+'</option>');
+        }
+      });
+    }
+  });  
+
+  $(document).on('click','#add_customer_classification',function(e){
+    e.preventDefault();
+    e.stopPropagation();
+    var cname = $('#ncustomerclassification').val();
+    if(cname =="") {
+      alert("Enter Customer Classification Name")
+    }
+    else {
+      $.get("{{url('add/customerclassification')}}", {cname}, function(data) {
+        $('#ncustomerclassification').val("");
+        if(data == 0) {
+          alert("Customer Classification already exists")
+        }
+        else if(data > 0) {
+          alert("Customer Classification added");
+          $('#modal-customer_classification').modal('hide');
+          $('#customer_classification_id').append('<option value="'+data+'" selected>'+cname.toUpperCase()+'</option>');
         }
       });
     }

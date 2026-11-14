@@ -24,6 +24,7 @@ use App\EmployeeDetail;
 use App\UnitMeasurement;
 use Carbon\Carbon;
 use App\CustomerType;
+use App\CustomerClassification;
 
 
 class EnquiryController extends Controller
@@ -280,8 +281,9 @@ class EnquiryController extends Controller
         }
 
         $customer_types = CustomerType::all();
+        $classifications = CustomerClassification::orderBy('name', 'asc')->get();
 
-        return view('enquiry/create',compact('employee','type','lead_type','status','from','to','func_type','inf_type','enq_no','places','staff_id','customer_types'));
+        return view('enquiry/create',compact('employee','type','lead_type','status','from','to','func_type','inf_type','enq_no','places','staff_id','customer_types','classifications'));
     }
 
     public function store(Request $request)
@@ -325,6 +327,9 @@ class EnquiryController extends Controller
             if ($request->has('customer_type_id')) {
                 $customer->customer_type_id = $request->get('customer_type_id');
             }
+            if ($request->has('customer_classification_id')) {
+                $customer->customer_classification_id = $request->get('customer_classification_id');
+            }
             $customer->address = $request->get('address');
             $customer->save();
             $customer_id = $customer->id;
@@ -354,6 +359,9 @@ class EnquiryController extends Controller
                     if ($request->has('customer_type_id')) {
                         $customer->customer_type_id = $request->get('customer_type_id');
                     }
+                    if ($request->has('customer_classification_id')) {
+                        $customer->customer_classification_id = $request->get('customer_classification_id');
+                    }
                     $customer->address         = $request->get('address');                             
                     $customer->save();   
                 }
@@ -365,6 +373,7 @@ class EnquiryController extends Controller
                                                             'alternate_phone' => $request->get('alt_phone'),
                                                             'place_id'          => $request->get('place'),
                                                             'customer_type_id' => $request->get('customer_type_id'),
+                                                            'customer_classification_id' => $request->get('customer_classification_id'),
                                                             'address'          => $request->get('address'),
                                                        ]);
                 }
@@ -385,6 +394,9 @@ class EnquiryController extends Controller
                 $customer->alternate_phone = $request->get('alt_phone');
                 if ($request->has('customer_type_id')) {
                     $customer->customer_type_id = $request->get('customer_type_id');
+                }
+                if ($request->has('customer_classification_id')) {
+                    $customer->customer_classification_id = $request->get('customer_classification_id');
                 }
                 $customer->address = $request->get('address');
                 $customer->save();
@@ -543,7 +555,8 @@ class EnquiryController extends Controller
                         ->select('employee_details.id','employee_details.name')
                         ->get();  
         $customer_types = CustomerType::all();
-        return view('enquiry/edit',compact('place_id','employee','type','lead_type','status','enquiry','enq_log','flwdate','dlvdate','text','from','to','category','enqpro','quotation','remarks','func_type','inf_type','places','associates','products','units','customer_types'));
+        $classifications = CustomerClassification::orderBy('name', 'asc')->get();
+        return view('enquiry/edit',compact('place_id','employee','type','lead_type','status','enquiry','enq_log','flwdate','dlvdate','text','from','to','category','enqpro','quotation','remarks','func_type','inf_type','places','associates','products','units','customer_types','classifications'));
     }
 
     public function update(Request $request)
@@ -591,6 +604,9 @@ class EnquiryController extends Controller
             if ($request->has('customer_type_id')) {
                 $customer->customer_type_id = $request->get('customer_type_id');
             }
+            if ($request->has('customer_classification_id')) {
+                $customer->customer_classification_id = $request->get('customer_classification_id');
+            }
             $customer->address         = $request->get('address');
             $customer->save();
 
@@ -622,6 +638,9 @@ class EnquiryController extends Controller
                     if ($request->has('customer_type_id')) {
                         $customer->customer_type_id = $request->get('customer_type_id');
                     }
+                    if ($request->has('customer_classification_id')) {
+                        $customer->customer_classification_id = $request->get('customer_classification_id');
+                    }
                     $customer->address         = $request->get('address');
                     $customer->save();   
                 }
@@ -645,6 +664,9 @@ class EnquiryController extends Controller
                 $customer->alternate_phone = $request->get('alt_phone');
                 if ($request->has('customer_type_id')) {
                     $customer->customer_type_id = $request->get('customer_type_id');
+                }
+                if ($request->has('customer_classification_id')) {
+                    $customer->customer_classification_id = $request->get('customer_classification_id');
                 }
                 $customer->address         = $request->get('address');
                 $customer->save();
@@ -1099,6 +1121,9 @@ class EnquiryController extends Controller
             if ($request->has('customer_type_id')) {
                 $customer->customer_type_id = $request->get('customer_type_id');
             }
+            if ($request->has('customer_classification_id')) {
+                $customer->customer_classification_id = $request->get('customer_classification_id');
+            }
             $customer->address        = $request->get('address');
             $customer->save();
             $customer_id = $customer->id;
@@ -1130,6 +1155,9 @@ class EnquiryController extends Controller
                     if ($request->has('customer_type_id')) {
                         $customer->customer_type_id = $request->get('customer_type_id');
                     }
+                    if ($request->has('customer_classification_id')) {
+                        $customer->customer_classification_id = $request->get('customer_classification_id');
+                    }
                     $customer->address         = $request->get('address');                     
                     $customer->save();   
                 }
@@ -1151,6 +1179,9 @@ class EnquiryController extends Controller
                 $customer->alternate_phone = $request->get('alt_phone');
                 if ($request->has('customer_type_id')) {
                     $customer->customer_type_id = $request->get('customer_type_id');
+                }
+                if ($request->has('customer_classification_id')) {
+                    $customer->customer_classification_id = $request->get('customer_classification_id');
                 }
                 $customer->address         = $request->get('address');
                 $customer->save();
