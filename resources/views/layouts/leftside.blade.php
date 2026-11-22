@@ -170,6 +170,54 @@
       </ul>
     </li>
   @endif
+  {{-- Support Ticket Management -- Administrator (Application Developer) --}}
+  @if(Auth::user()->isSupportAdmin())
+    <li class="treeview {{ request()->is('admin/support*') ? 'active' : '' }}">
+      <a href="#">
+        <i class="fa fa-headphones text-aqua"></i> <span>Support (Developer)</span>
+        <span class="pull-right-container">
+          <i class="fa fa-angle-left pull-right"></i>
+        </span>
+      </a>
+      <ul class="treeview-menu">
+        <li class="{{ request()->routeIs('admin.support.dashboard') ? 'active' : '' }}">
+          <a href="{{ route('admin.support.dashboard') }}"><i class="fa fa-circle-o"></i> Support Dashboard</a>
+        </li>
+        <li class="{{ request()->routeIs('admin.support.tickets.index') ? 'active' : '' }}">
+          <a href="{{ route('admin.support.tickets.index') }}"><i class="fa fa-circle-o"></i> All Tickets</a>
+        </li>
+        <li class="{{ request()->routeIs('admin.support.categories.index') ? 'active' : '' }}">
+          <a href="{{ route('admin.support.categories.index') }}"><i class="fa fa-circle-o"></i> Ticket Categories</a>
+        </li>
+        <li class="{{ request()->routeIs('admin.support.reports') ? 'active' : '' }}">
+          <a href="{{ route('admin.support.reports') }}"><i class="fa fa-circle-o"></i> Reports</a>
+        </li>
+      </ul>
+    </li>
+  @endif
+
+  {{-- Support Ticket Management -- Client User (Office Scoped) --}}
+  @if(Auth::user()->office_id > 0 || !Auth::user()->isSupportAdmin())
+    <li class="treeview {{ (request()->is('support*') && !request()->is('admin/support*')) ? 'active' : '' }}">
+      <a href="#">
+        <i class="fa fa-life-ring text-yellow"></i> <span>Support</span>
+        <span class="pull-right-container">
+          <i class="fa fa-angle-left pull-right"></i>
+        </span>
+      </a>
+      <ul class="treeview-menu">
+        <li class="{{ request()->routeIs('support.dashboard') ? 'active' : '' }}">
+          <a href="{{ route('support.dashboard') }}"><i class="fa fa-circle-o"></i> Support Dashboard</a>
+        </li>
+        <li class="{{ request()->routeIs('support.tickets.create') ? 'active' : '' }}">
+          <a href="{{ route('support.tickets.create') }}"><i class="fa fa-circle-o"></i> Create New Ticket</a>
+        </li>
+        <li class="{{ request()->routeIs('support.tickets.index') ? 'active' : '' }}">
+          <a href="{{ route('support.tickets.index') }}"><i class="fa fa-circle-o"></i> All Tickets</a>
+        </li>
+      </ul>
+    </li>
+  @endif
     @if(1 == 2)
     <li class="treeview">
       <a href="#">

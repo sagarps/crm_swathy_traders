@@ -64,6 +64,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'check.authPermission' => \App\Http\Middleware\CheckPermission::class,
         'Admin' => \App\Http\Middleware\AdminMiddleware::class,
+        'support.admin' => \App\Http\Middleware\SupportAdminMiddleware::class,
     ];
 
     /**
@@ -84,6 +85,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'check.authPermission' => \App\Http\Middleware\CheckPermission::class,
         'Admin' => \App\Http\Middleware\AdminMiddleware::class,
+        'support.admin' => \App\Http\Middleware\SupportAdminMiddleware::class,
     ];
 
     /**

@@ -24,5 +24,6 @@ require 'route_chart.php';
 require 'route_complaint.php';
 require 'route_payment.php';
 require 'route_security.php';
+require 'route_support.php';
 
 Route::get('/home', 'HomeController@index')->name('home');

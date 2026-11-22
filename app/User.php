@@ -57,4 +57,20 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\UserRole','user_id');
     }
+
+    public function isSupportAdmin(): bool
+    {
+        if ((int) $this->office_id === 0) {
+            return true;
+        }
+        if ($this->role() && strtoupper($this->role()->name) === 'MASTER') {
+            return true;
+        }
+        return false;
+    }
+
+    public function supportTickets()
+    {
+        return $this->hasMany('App\SupportTicket', 'created_by');
+    }
 }
